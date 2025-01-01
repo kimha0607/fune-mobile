@@ -107,10 +107,7 @@ export default function UserScreen() {
                 Họ và tên
               </Text>
               <Text style={{ color: palette.black }}>
-                {truncateString(
-                  userInfo?.lastName + ' ' + userInfo?.firstName,
-                  25,
-                )}
+                {truncateString(userInfo?.name || '', 25)}
               </Text>
             </View>
             <SpaceComponent height={8} />
@@ -120,7 +117,7 @@ export default function UserScreen() {
                 Email
               </Text>
               <Text style={{ color: palette.black }}>
-                {truncateString(userInfo?.username || '', 25)}
+                {truncateString(userInfo?.email || '', 25)}
               </Text>
             </View>
             <SpaceComponent height={8} />
@@ -130,7 +127,7 @@ export default function UserScreen() {
                 Số điện thoại
               </Text>
               <Text style={{ color: palette.black }}>
-                {truncateString(userInfo?.phoneNumber || '', 25)}
+                {truncateString(userInfo?.phone || '', 25)}
               </Text>
             </View>
             <SpaceComponent height={8} />

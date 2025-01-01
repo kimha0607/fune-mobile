@@ -8,8 +8,6 @@ import {
   PasswordChangePayload,
   ProfileChangePayload,
 } from '../../../types/user';
-import { IBaseError } from '../../../types/error';
-import { transformErrorList } from '../../../utils/helper';
 
 export const getUserInfo = createAsyncThunk('user/getUserInfo', async () => {
   const res = await fetchUserInfo();
@@ -19,43 +17,24 @@ export const getUserInfo = createAsyncThunk('user/getUserInfo', async () => {
   return res.data.data;
 });
 
-export const handleChangePassword = createAsyncThunk<
-  any,
-  PasswordChangePayload,
-  { rejectValue: IBaseError[] }
->(
+export const handleChangePassword = createAsyncThunk(
   'user/changePassword',
-  async (payload: PasswordChangePayload, { rejectWithValue }) => {
+  async (payload: PasswordChangePayload) => {
     const response = await changeUserPassword(payload);
-    if (!response) {
+    if (!response || !response.data || response.data.status === 'error') {
       throw new Error('Network Error!');
-    }
-    if (response?.data?.code === '400') {
-      const dataError = response?.data?.data;
-      if (Array.isArray(dataError)) {
-        return rejectWithValue(transformErrorList(dataError));
-      }
     }
     return response.data;
   },
 );
 
-export const handleChangeUserInfo = createAsyncThunk<
-  any,
-  ProfileChangePayload,
-  { rejectValue: IBaseError[] }
->(
+export const handleChangeUserInfo = createAsyncThunk(
   'user/changeProfile',
-  async (payload: ProfileChangePayload, { rejectWithValue }) => {
-    const response = await changeUserInfo(payload);
-    if (!response || !response.data || !response.data) {
+  async ({ payload, id }: { payload: ProfileChangePayload; id: number }) => {
+    const response = await changeUserInfo(payload, id);
+    console.log('response: ', response);
+    if (!response || !response.data || response.data.status === 'error') {
       throw new Error('Network Error!');
-    }
-    if (response?.data?.code === '400') {
-      const dataError = response?.data?.data;
-      if (Array.isArray(dataError)) {
-        return rejectWithValue(transformErrorList(dataError));
-      }
     }
     return response.data;
   },

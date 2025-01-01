@@ -9,8 +9,6 @@ import { Call, Map, User } from 'iconsax-react-native';
 import SpaceComponent from '../../../components/SpaceComponent';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../store/store';
-import { selectErrorList } from '../../../store/slices/error/selectors';
-import { CODE400, FIELD_TRANSLATIONS } from '../../../utils/config';
 import Toast from 'react-native-toast-message';
 import {
   selectLoadingChangeUserInfo,
@@ -22,13 +20,11 @@ import {
 } from '../../../store/slices/user/thunk';
 import { resetLoadingChangeUserInfo } from '../../../store/slices/user';
 import LoadingButton from '../../../components/LoadingButton';
-import { splitFullName } from '../../../utils/helper';
 
 export default function ChangeUserInfo() {
-  const { control, setValue, handleSubmit } = useForm();
+  const { control, reset, handleSubmit } = useForm();
   const dispatch = useDispatch<AppDispatch>();
   const loadingChangeUserInfo = useSelector(selectLoadingChangeUserInfo);
-  const errorList = useSelector(selectErrorList);
   const userInfo = useSelector(selectUserInfo);
 
   const validateFullName = (value: string) => {
@@ -48,25 +44,29 @@ export default function ChangeUserInfo() {
   };
 
   const onSubmit = (data: any) => {
-    const { firstName, lastName } = splitFullName(data.fullName || '');
-
-    dispatch(
-      handleChangeUserInfo({
-        phoneNumber: data.phoneNumber,
-        email: userInfo?.username || '',
-        firstName: firstName,
-        lastName: lastName,
-        address: data.address,
-        description: '',
-      }),
-    );
+    if (userInfo && data) {
+      dispatch(
+        handleChangeUserInfo({
+          payload: {
+            name: data.fullName,
+            phone: data.phoneNumber,
+            address: data.address,
+            role_id: userInfo.role_id,
+            active: userInfo.active,
+          },
+          id: userInfo.id,
+        }),
+      );
+    }
   };
 
   useEffect(() => {
     if (userInfo) {
-      setValue('fullName', userInfo.lastName + ' ' + userInfo.firstName);
-      setValue('phoneNumber', userInfo.phoneNumber);
-      setValue('address', userInfo.address);
+      reset({
+        fullName: userInfo.name,
+        address: userInfo.address || '',
+        phoneNumber: userInfo.phone || '',
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userInfo]);
@@ -80,20 +80,6 @@ export default function ChangeUserInfo() {
       });
       dispatch(getUserInfo());
       dispatch(resetLoadingChangeUserInfo());
-    }
-    if (loadingChangeUserInfo === 'rejected') {
-      errorList.forEach(error => {
-        const foundMessage = CODE400.find(e => e.code === error.code)?.message;
-        const foundObj = FIELD_TRANSLATIONS.find(
-          e => e.fieldName === error.values,
-        )?.translation;
-
-        return Toast.show({
-          type: 'error',
-          text1: 'Thay đổi không thành công',
-          text2: foundObj + ' ' + foundMessage,
-        });
-      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadingChangeUserInfo]);

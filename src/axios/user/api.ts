@@ -7,7 +7,7 @@ import {
 } from '../../types/user';
 import axiosInstance from '../axios';
 
-const USER_API_ENDPOINT = '/api/pharma/v1/user';
+const USER_API_ENDPOINT = '/api/users';
 
 export async function fetchUserInfo(): Promise<IBodyResponse<IBaseUserInfo>> {
   return await axiosInstance.get(`${USER_API_ENDPOINT}/info`);
@@ -15,8 +15,8 @@ export async function fetchUserInfo(): Promise<IBodyResponse<IBaseUserInfo>> {
 
 export async function changeUserPassword(
   payload: PasswordChangePayload,
-): Promise<IBodyResponse<IBaseUserInfo | IBaseError[]>> {
-  return await axiosInstance.post(
+): Promise<IBodyResponse<[]>> {
+  return await axiosInstance.patch(
     `${USER_API_ENDPOINT}/change-password`,
     payload,
   );
@@ -24,9 +24,7 @@ export async function changeUserPassword(
 
 export async function changeUserInfo(
   payload: ProfileChangePayload,
-): Promise<IBodyResponse<'OK' | IBaseError>> {
-  return await axiosInstance.post(
-    `${USER_API_ENDPOINT}/change-info-user`,
-    payload,
-  );
+  id: number,
+): Promise<IBodyResponse<IBaseUserInfo>> {
+  return await axiosInstance.put(`${USER_API_ENDPOINT}/${id}`, payload);
 }

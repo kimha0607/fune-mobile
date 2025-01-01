@@ -1,25 +1,24 @@
 export interface IBaseUserInfo {
-  id: string;
+  id: number;
   email: string;
   name: string;
   phone: string;
   address: string;
   role_id: number;
-  active: boolean;
+  active: number;
   updated_at: string;
   created_at: string;
 }
 
 export interface PasswordChangePayload {
-  currentPassword: string;
-  newPassword: string;
+  current_password: string;
+  new_password: string;
 }
 
 export interface ProfileChangePayload {
-  phoneNumber: string;
-  email: string;
-  firstName: string;
-  lastName: string;
+  name: string;
+  phone: string;
   address: string;
-  description: string;
+  role_id: number;
+  active: number;
 }

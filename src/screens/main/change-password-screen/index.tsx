@@ -17,7 +17,7 @@ import { ContainerComponent } from '../../../components';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { CODE400, STORAGE_KEY } from '../../../utils/config';
+import { STORAGE_KEY } from '../../../utils/config';
 import SpaceComponent from '../../../components/SpaceComponent';
 import { removeAccessToken } from '../../../store/slices/auth';
 import Animated, {
@@ -27,12 +27,9 @@ import Animated, {
 } from 'react-native-reanimated';
 import { AppDispatch } from '../../../store/store';
 import { handleChangePassword } from '../../../store/slices/user/thunk';
-import { selectErrorList } from '../../../store/slices/error/selectors';
 import { selectLoadingChangeUserPassword } from '../../../store/slices/user/selectors';
-import { resetError } from '../../../store/slices/error';
 import { resetLoadingChangeUserPassword } from '../../../store/slices/user';
 import LoadingButton from '../../../components/LoadingButton';
-import Toast from 'react-native-toast-message';
 
 const containerStyle: ViewStyle = { paddingHorizontal: 8 };
 
@@ -41,7 +38,6 @@ export default function ChangePasswordScreen() {
   const opacity = useSharedValue(0);
   const dispatch = useDispatch<AppDispatch>();
   const { control, handleSubmit, watch } = useForm();
-  const errorList = useSelector(selectErrorList);
   const loadingChangeUserPassword = useSelector(
     selectLoadingChangeUserPassword,
   );
@@ -65,8 +61,8 @@ export default function ChangePasswordScreen() {
   const onSubmit = async (data: any) => {
     const { currentPassword, newPassword } = data;
     const payload = {
-      currentPassword,
-      newPassword,
+      current_password: currentPassword,
+      new_password: newPassword,
     };
 
     try {
@@ -80,18 +76,6 @@ export default function ChangePasswordScreen() {
     if (loadingChangeUserPassword === 'fulfilled') {
       setModalVisible(true);
       opacity.value = 1;
-      dispatch(resetLoadingChangeUserPassword());
-    }
-    if (loadingChangeUserPassword === 'rejected') {
-      errorList.forEach(error => {
-        const foundMessage = CODE400.find(e => e.code === error.code)?.message;
-        return Toast.show({
-          type: 'error',
-          text1: 'Thông báo',
-          text2: foundMessage,
-        });
-      });
-      dispatch(resetError());
       dispatch(resetLoadingChangeUserPassword());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
