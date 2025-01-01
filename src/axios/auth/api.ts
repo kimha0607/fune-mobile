@@ -1,9 +1,8 @@
 import {
   PayloadLogin,
   PayloadRegister,
-  PayloadVerifyOtp,
-  PayloadSendOtp,
   ResponseLogin,
+  ResponseRegister,
 } from '../../types/auth';
 import { IBodyResponse } from '../../types/axios';
 import axiosInstance from '../axios';
@@ -17,27 +16,7 @@ export async function signIn(
 
 export async function register(
   payload: PayloadRegister,
-): Promise<IBodyResponse<any>> {
+): Promise<IBodyResponse<ResponseRegister>> {
   const res = await axiosInstance.post('/api/register', payload);
   return res;
-}
-
-export async function sendOtp(
-  payload: PayloadSendOtp,
-): Promise<IBodyResponse<any>> {
-  const response = await axiosInstance.post(
-    '/api/pharma/pub/send-otp',
-    payload,
-  );
-  return response;
-}
-
-export async function verifyOtp(
-  payload: PayloadVerifyOtp,
-): Promise<IBodyResponse<any>> {
-  const response = await axiosInstance.post(
-    '/api/pharma/pub/verify-otp',
-    payload,
-  );
-  return response;
 }

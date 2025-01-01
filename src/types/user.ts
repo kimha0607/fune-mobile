@@ -1,15 +1,13 @@
 export interface IBaseUserInfo {
-  firstName?: string;
-  lastName?: string;
-  lockStartDate?: Date | null;
-  phoneNumber?: string;
-  recordId?: number | null;
-  subscriptionEndDate?: string;
-  username?: string;
-  isBought?: boolean;
-  address?: string;
-  isActive?: boolean;
-  packageId?: number;
+  id: string;
+  email: string;
+  name: string;
+  phone: string;
+  address: string;
+  role_id: number;
+  active: boolean;
+  updated_at: string;
+  created_at: string;
 }
 
 export interface PasswordChangePayload {

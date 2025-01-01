@@ -8,9 +8,3 @@ export const selectLoadingSignIn = (state: RootState) =>
 
 export const selectLoadingRegister = (state: RootState) =>
   state.authReducer.loadingRegister;
-
-export const selectLoadingSendOtp = (state: RootState) =>
-  state.authReducer.loadingSendOtp;
-
-export const selectLoadingVerifyOtp = (state: RootState) =>
-  state.authReducer.loadingVerifyOtp;

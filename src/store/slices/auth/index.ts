@@ -1,18 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AuthSlice } from './types';
-import {
-  handleLogin,
-  handleRegister,
-  handleSendOtp,
-  handleVerifyOtp,
-} from './thunk';
+import { handleLogin, handleRegister } from './thunk';
 
 export const initialState: AuthSlice = {
   accessToken: '',
   loadingSignIn: 'idle',
   loadingRegister: 'idle',
-  loadingSendOtp: 'idle',
-  loadingVerifyOtp: 'idle',
 };
 
 const authSlice = createSlice({
@@ -28,12 +21,6 @@ const authSlice = createSlice({
     resetLoadingAuth: state => {
       state.loadingSignIn = 'idle';
       state.loadingRegister = 'idle';
-    },
-    resetLoadingSendOtp: state => {
-      state.loadingSendOtp = 'idle';
-    },
-    resetLoadingVerifyOtp: state => {
-      state.loadingVerifyOtp = 'idle';
     },
   },
   extraReducers: builder => {
@@ -59,36 +46,9 @@ const authSlice = createSlice({
     builder.addCase(handleRegister.rejected, state => {
       state.loadingRegister = 'rejected';
     });
-
-    // send otp
-    builder.addCase(handleSendOtp.pending, state => {
-      state.loadingSendOtp = 'pending';
-    });
-    builder.addCase(handleSendOtp.fulfilled, state => {
-      state.loadingSendOtp = 'fulfilled';
-    });
-    builder.addCase(handleSendOtp.rejected, state => {
-      state.loadingSendOtp = 'rejected';
-    });
-
-    // verify otp
-    builder.addCase(handleVerifyOtp.pending, state => {
-      state.loadingVerifyOtp = 'pending';
-    });
-    builder.addCase(handleVerifyOtp.fulfilled, state => {
-      state.loadingVerifyOtp = 'fulfilled';
-    });
-    builder.addCase(handleVerifyOtp.rejected, state => {
-      state.loadingVerifyOtp = 'rejected';
-    });
   },
 });
 
-export const {
-  addAccessToken,
-  removeAccessToken,
-  resetLoadingAuth,
-  resetLoadingSendOtp,
-  resetLoadingVerifyOtp,
-} = authSlice.actions;
+export const { addAccessToken, removeAccessToken, resetLoadingAuth } =
+  authSlice.actions;
 export const authReducer = authSlice.reducer;

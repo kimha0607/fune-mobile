@@ -5,6 +5,7 @@ import { Alert } from 'react-native';
 import store from '../store/store';
 import { removeAccessToken } from '../store/slices/auth';
 import Toast from 'react-native-toast-message';
+import { getErrorMessages } from '../utils/helper';
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL || '',
 });
@@ -27,7 +28,6 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   async error => {
-    console.log('error', error);
     if (error.response && error.response.status === 403) {
       await AsyncStorage.removeItem(STORAGE_KEY.ACCESS_TOKEN);
       store.dispatch(removeAccessToken());
@@ -35,6 +35,26 @@ axiosInstance.interceptors.response.use(
       throw new Error(
         'Unauthorized: Access token might be expired or invalid.',
       );
+    }
+    if (error.response && error.response.status === 401) {
+      Toast.show({
+        type: 'error',
+        text1: 'Thông báo',
+        text2: 'Sai mật khẩu.',
+      });
+    }
+    if (error.response && error.response.status === 422) {
+      const errorList = getErrorMessages(error.response.data.errors);
+      // eslint-disable-next-line @typescript-eslint/no-shadow
+      errorList.forEach(error => {
+        return Toast.show({
+          type: 'error',
+          text1: 'Lỗi đăng nhập',
+          text2: error.message,
+        });
+      });
+      await AsyncStorage.removeItem(STORAGE_KEY.ACCESS_TOKEN);
+      store.dispatch(removeAccessToken());
     }
     if (error.response && error.response.status === 500) {
       Toast.show({

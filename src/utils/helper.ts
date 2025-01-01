@@ -1,4 +1,6 @@
 import { Alert, Linking, Platform } from 'react-native';
+import { IBaseError } from '../types/error';
+import { CODE400, FIELD_TRANSLATIONS } from './config';
 
 export const transformErrorList = (errors: any[]) => {
   const result: any[] = [];
@@ -79,4 +81,29 @@ export const truncateString = (value: string, maxLength: number) => {
     return value.slice(0, maxLength - 3) + '...';
   }
   return value;
+};
+
+export const getErrorMessages = (err: IBaseError[]) => {
+  return err.map(e => {
+    // Tìm đối tượng trong CODE400 có code khớp với err.code
+    const codeInfo = CODE400.find(item => item.code === e.code);
+
+    // Tìm bản dịch của field từ FIELD_TRANSLATIONS
+    const fieldTranslation = FIELD_TRANSLATIONS.find(
+      item => item.fieldName === e.field,
+    );
+
+    // Nếu tìm thấy bản dịch cho field, thay thế field bằng bản dịch
+    const translatedField = fieldTranslation
+      ? fieldTranslation.translation
+      : e.field;
+
+    // Nếu tìm thấy code trong CODE400, tạo message bằng cách kết hợp field (đã dịch) và message
+    if (codeInfo) {
+      return { message: `${translatedField} ${codeInfo.message}` };
+    }
+
+    // Nếu không tìm thấy code trong CODE400, trả về message mặc định
+    return { message: 'Lỗi không xác định' };
+  });
 };

@@ -40,7 +40,7 @@ export default function LoginScreen() {
   const loadingSignIn = useSelector(selectLoadingSignIn);
   const errorList = useSelector(selectErrorList);
 
-  const { control, watch, handleSubmit } = useForm();
+  const { control, handleSubmit } = useForm();
   const opacity = useSharedValue(0);
 
   const animatedStyle = useAnimatedStyle(() => {
@@ -146,16 +146,6 @@ export default function LoginScreen() {
           }}
         />
         <SpaceComponent height={19} />
-        <Text
-          style={{
-            fontWeight: '400',
-            color: palette.black,
-            fontSize: appSize.h5,
-            alignSelf: 'flex-end',
-          }}
-          onPress={() => navigation.navigate('ForgotPasswordScreen')}>
-          Quên mật khẩu?
-        </Text>
         <View style={{ flex: 1 }} />
 
         <LoadingButton
@@ -194,17 +184,6 @@ export default function LoginScreen() {
                   style={styles.modalCloseButton}
                   onPress={() => handleModalClose()}>
                   <Text style={styles.modalButtonText}>Đóng</Text>
-                </Pressable>
-                <Pressable
-                  style={styles.modalConfirmButton}
-                  onPress={() => {
-                    handleModalClose();
-                    navigation.navigate('OTPScreen', {
-                      email: watch('email'),
-                      authActionType: 'confirm-email',
-                    });
-                  }}>
-                  <Text style={styles.modalButtonText}>Ok</Text>
                 </Pressable>
               </View>
             </Animated.View>
