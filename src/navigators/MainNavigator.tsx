@@ -7,6 +7,7 @@ import { selectLoadingGetUserInfo } from '../store/slices/user/selectors';
 import { useSelector } from 'react-redux';
 import ChangePasswordScreen from '../screens/main/change-password-screen';
 import ChangeUserInfoScreen from '../screens/main/change-user-info-screen';
+import AddChildrenScreen from '../screens/main/add-children-screen';
 
 export default function MainNavigator() {
   const Stack = createNativeStackNavigator();
@@ -35,6 +36,17 @@ export default function MainNavigator() {
           options={{
             headerShown: true,
             title: 'Thay Đổi Thông Tin',
+            headerBackTitleVisible: false,
+            headerTintColor: palette.primary,
+            headerStyle: { backgroundColor: palette.white },
+          }}
+        />
+        <Stack.Screen
+          name="AddChildScreen"
+          component={AddChildrenScreen}
+          options={{
+            headerShown: true,
+            title: 'Thêm thông tin con',
             headerBackTitleVisible: false,
             headerTintColor: palette.primary,
             headerStyle: { backgroundColor: palette.white },

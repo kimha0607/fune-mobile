@@ -1,7 +1,8 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import AppointmentScreen from '../screens/main/appointment-screen';
 import UserScreen from '../screens/main/user-screen';
-import { Home2, User } from 'iconsax-react-native';
+import { Home2, User, Calendar } from 'iconsax-react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View } from 'react-native';
 import { RootStackParamList } from '../types/root-stack-params';
@@ -36,6 +37,23 @@ const HomeTabIcon = ({ size, focused, color }: TabIconProps) => (
   </View>
 );
 
+const AppointmentTabIcon = ({ size, focused, color }: TabIconProps) => (
+  <View
+    style={{
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: 10,
+      borderTopWidth: 2,
+      borderTopColor: focused ? palette.primary : 'transparent',
+    }}>
+    <Calendar
+      size={size}
+      color={color}
+      variant={focused ? 'Bold' : 'Outline'}
+    />
+  </View>
+);
+
 const UserTabIcon = ({ size, focused, color }: TabIconProps) => (
   <View
     style={{
@@ -64,6 +82,21 @@ const TabNavigator = () => {
         component={HomeStackNavigator}
         options={{
           tabBarIcon: HomeTabIcon,
+        }}
+      />
+      <Tab.Screen
+        name="AppointmentTab"
+        component={AppointmentScreen}
+        options={{
+          tabBarIcon: AppointmentTabIcon,
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: '#FAFBFF',
+            borderBottomColor: palette.gray4,
+            borderBottomWidth: 1,
+          },
+          headerTintColor: palette.primary,
+          title: 'Đặt lịch khám',
         }}
       />
       <Tab.Screen

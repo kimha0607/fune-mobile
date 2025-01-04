@@ -1,4 +1,3 @@
-import { IBaseError } from './../../types/error';
 import { IBodyResponse } from '../../types/axios';
 import {
   IBaseUserInfo,

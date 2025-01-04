@@ -32,7 +32,6 @@ export const handleChangeUserInfo = createAsyncThunk(
   'user/changeProfile',
   async ({ payload, id }: { payload: ProfileChangePayload; id: number }) => {
     const response = await changeUserInfo(payload, id);
-    console.log('response: ', response);
     if (!response || !response.data || response.data.status === 'error') {
       throw new Error('Network Error!');
     }

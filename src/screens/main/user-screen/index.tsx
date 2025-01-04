@@ -9,14 +9,9 @@ import { ConfirmationModal, LoadingModal } from '../../../modals';
 import { palette } from '../../../constants/palette';
 import { appInfo } from '../../../constants/appInfo';
 import SpaceComponent from '../../../components/SpaceComponent';
-import {
-  DirectRight,
-  Heart,
-  LogoutCurve,
-  ShieldSecurity,
-} from 'iconsax-react-native';
+import { Heart, LogoutCurve, ShieldSecurity } from 'iconsax-react-native';
 import { useNavigation } from '@react-navigation/native';
-import { handleOpenZalo, truncateString } from '../../../utils/helper';
+import { truncateString } from '../../../utils/helper';
 import { NavigationProps } from '../../../types/root-stack-params';
 import { selectUserInfo } from '../../../store/slices/user/selectors';
 import { removeAccessToken } from '../../../store/slices/auth';
@@ -48,14 +43,6 @@ export default function UserScreen() {
       ),
       action: () => {
         navigation.navigate('ChangePasswordScreen');
-      },
-    },
-    {
-      id: '3',
-      title: 'Liên Hệ Với Chúng Tôi',
-      affic: <DirectRight size={30} color={palette.primary} variant="Bold" />,
-      action: () => {
-        handleOpenZalo(process.env.CONTACT_PHONE_NUMBER || '');
       },
     },
     {
