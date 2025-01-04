@@ -46,7 +46,7 @@ export default function AppointmentScreen() {
         <CalendarSearch size={30} color={palette.primary} variant="Bold" />
       ),
       action: () => {
-        navigation.navigate('ChangePasswordScreen');
+        navigation.navigate('AppointmentScheduleScreen');
       },
     },
   ];

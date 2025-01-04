@@ -5,7 +5,8 @@ export type RootStackParamList = {
   HomeScreen: undefined;
   Main: undefined;
   ChangePasswordScreen: undefined;
-  AddChildrenScreen: undefined;
+  AddChildScreen: undefined;
+  AppointmentScheduleScreen: undefined;
   CategoryScreen: { type: number };
   ChangeUserInfoScreen: undefined;
   PaymentScreen: { packageItem: IBasePackage };

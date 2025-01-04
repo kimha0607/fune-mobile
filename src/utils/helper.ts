@@ -13,7 +13,6 @@ export const transformErrorList = (errors: any[]) => {
         });
       });
     } else {
-      // Handle case where values is null or undefined
       result.push({
         code: error.code,
         values: null,
@@ -85,25 +84,32 @@ export const truncateString = (value: string, maxLength: number) => {
 
 export const getErrorMessages = (err: IBaseError[]) => {
   return err.map(e => {
-    // Tìm đối tượng trong CODE400 có code khớp với err.code
     const codeInfo = CODE400.find(item => item.code === e.code);
 
-    // Tìm bản dịch của field từ FIELD_TRANSLATIONS
     const fieldTranslation = FIELD_TRANSLATIONS.find(
       item => item.fieldName === e.field,
     );
 
-    // Nếu tìm thấy bản dịch cho field, thay thế field bằng bản dịch
     const translatedField = fieldTranslation
       ? fieldTranslation.translation
       : e.field;
 
-    // Nếu tìm thấy code trong CODE400, tạo message bằng cách kết hợp field (đã dịch) và message
     if (codeInfo) {
       return { message: `${translatedField} ${codeInfo.message}` };
     }
 
-    // Nếu không tìm thấy code trong CODE400, trả về message mặc định
     return { message: 'Lỗi không xác định' };
   });
+};
+
+export const convertDateTime = (input: string) => {
+  const date = new Date(input);
+
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+
+  return `${hours}:${minutes} ${day}-${month}-${year}`;
 };
