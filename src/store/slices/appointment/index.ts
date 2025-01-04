@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AppointmentSlice } from './types';
-import { getAppointmentList } from './thunk';
+import { getAppointmentList, handleAppointmentBooking } from './thunk';
 
 export const initialState: AppointmentSlice = {
   appointmentList: [],
   loadingGetAppointmentList: 'idle',
+  loadingAppointmentBooking: 'idle',
 };
 
 const appointmentSlice = createSlice({
@@ -13,6 +14,9 @@ const appointmentSlice = createSlice({
   reducers: {
     resetLoadingGetAppointmentList: state => {
       state.loadingGetAppointmentList = 'idle';
+    },
+    resetLoadingAppointmentBooking: state => {
+      state.loadingAppointmentBooking = 'idle';
     },
   },
   extraReducers: builder => {
@@ -27,8 +31,23 @@ const appointmentSlice = createSlice({
     builder.addCase(getAppointmentList.rejected, state => {
       state.loadingGetAppointmentList = 'rejected';
     });
+
+    // appointment booking
+    builder.addCase(handleAppointmentBooking.pending, state => {
+      state.loadingAppointmentBooking = 'pending';
+    });
+    builder.addCase(handleAppointmentBooking.fulfilled, (state, action) => {
+      state.appointmentList = action.payload;
+      state.loadingAppointmentBooking = 'fulfilled';
+    });
+    builder.addCase(handleAppointmentBooking.rejected, state => {
+      state.loadingAppointmentBooking = 'rejected';
+    });
   },
 });
 
-export const { resetLoadingGetAppointmentList } = appointmentSlice.actions;
+export const {
+  resetLoadingGetAppointmentList,
+  resetLoadingAppointmentBooking,
+} = appointmentSlice.actions;
 export const appointmentReducer = appointmentSlice.reducer;

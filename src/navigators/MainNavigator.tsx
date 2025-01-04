@@ -9,6 +9,7 @@ import ChangePasswordScreen from '../screens/main/change-password-screen';
 import ChangeUserInfoScreen from '../screens/main/change-user-info-screen';
 import AddChildrenScreen from '../screens/main/add-children-screen';
 import AppointmentScheduleScreen from '../screens/main/appointment-schedule-screen';
+import AppointmentBookingScreen from '../screens/main/appointment-booking-screen';
 
 export default function MainNavigator() {
   const Stack = createNativeStackNavigator();
@@ -59,6 +60,17 @@ export default function MainNavigator() {
           options={{
             headerShown: true,
             title: 'Lịch khám của bạn',
+            headerBackTitleVisible: false,
+            headerTintColor: palette.primary,
+            headerStyle: { backgroundColor: palette.white },
+          }}
+        />
+        <Stack.Screen
+          name="AppointmentBookingScreen"
+          component={AppointmentBookingScreen}
+          options={{
+            headerShown: true,
+            title: 'Đặt lịch khám',
             headerBackTitleVisible: false,
             headerTintColor: palette.primary,
             headerStyle: { backgroundColor: palette.white },

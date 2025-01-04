@@ -36,7 +36,7 @@ export default function AppointmentScreen() {
       title: 'Đặt lịch khám',
       affic: <CalendarEdit size={30} color={palette.primary} variant="Bold" />,
       action: () => {
-        navigation.navigate('ChangeUserInfoScreen');
+        navigation.navigate('AppointmentBookingScreen');
       },
     },
     {

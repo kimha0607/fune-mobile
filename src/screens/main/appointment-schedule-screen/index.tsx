@@ -12,9 +12,9 @@ import {
   selectAppointmentList,
   selectLoadingGetAppointmentList,
 } from '../../../store/slices/appointment/selectors';
-import { convertDateTime } from '../../../utils/helper';
+import { convertDateTime, convertToVietnamese } from '../../../utils/helper';
 
-export default function AppointmentScreen() {
+export default function AppointmentScheduleScreen() {
   const userInfo = useSelector(selectUserInfo);
   const appointmentList = useSelector(selectAppointmentList);
   const loadingGetAppointmentList = useSelector(
@@ -22,6 +22,16 @@ export default function AppointmentScreen() {
   );
 
   const dispatch = useDispatch<AppDispatch>();
+
+  const status = (value: string) => {
+    if (value === 'confirmed') {
+      return 'Đã xác nhận';
+    }
+    if (value === 'cancelled') {
+      return 'Đã hủy';
+    }
+    return 'Chưa xác nhận';
+  };
 
   useEffect(() => {
     if (userInfo) {
@@ -39,21 +49,26 @@ export default function AppointmentScreen() {
         data={appointmentList}
         renderItem={({ item }) => (
           <View style={styles.appointmentCard}>
-            <Text style={styles.appointmentTitle}>
+            <View style={styles.top}>
+              <Text style={styles.appointmentTitle}>
+                {convertToVietnamese(item.dental_issue)}
+              </Text>
+              <Text
+                style={[
+                  styles.appointmentStatus,
+                  item.status === 'confirmed' && styles.completed,
+                  item.status === 'cancelled' && styles.cancelled,
+                  item.status === 'pending' && styles.pending,
+                ]}>
+                {status(item.status)}
+              </Text>
+            </View>
+            <Text style={styles.appointmentDetails}>
               {convertDateTime(item.appointment_time)}
             </Text>
             <Text style={styles.appointmentDetails}>{item.clinic.address}</Text>
             <Text style={styles.appointmentDetails}>
               Bác sĩ {item.doctor.name}
-            </Text>
-            <Text
-              style={[
-                styles.appointmentStatus,
-                item.status === 'Completed' && styles.completed,
-                item.status === 'Cancelled' && styles.cancelled,
-                item.status === 'pending' && styles.pending,
-              ]}>
-              {item.status}
             </Text>
           </View>
         )}
@@ -75,6 +90,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 5,
     elevation: 5,
+  },
+  top: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   appointmentTitle: {
     fontSize: 16,

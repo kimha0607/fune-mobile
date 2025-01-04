@@ -4,4 +4,5 @@ import { Loading } from '../../../types/loading';
 export interface AppointmentSlice {
   appointmentList: IBaseAppointment[];
   loadingGetAppointmentList: Loading;
+  loadingAppointmentBooking: Loading;
 }

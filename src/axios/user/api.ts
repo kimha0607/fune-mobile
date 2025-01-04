@@ -1,6 +1,7 @@
 import { IBodyResponse } from '../../types/axios';
 import {
   IBaseUserInfo,
+  IBaseUserList,
   PasswordChangePayload,
   ProfileChangePayload,
 } from '../../types/user';
@@ -10,6 +11,10 @@ const USER_API_ENDPOINT = '/api/users';
 
 export async function fetchUserInfo(): Promise<IBodyResponse<IBaseUserInfo>> {
   return await axiosInstance.get(`${USER_API_ENDPOINT}/info`);
+}
+
+export async function fetchDoctorInfo(): Promise<IBodyResponse<IBaseUserList>> {
+  return await axiosInstance.get(`${USER_API_ENDPOINT}?role_id=2`);
 }
 
 export async function changeUserPassword(

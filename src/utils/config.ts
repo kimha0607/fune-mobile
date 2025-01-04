@@ -23,6 +23,10 @@ export const CODE400 = [
     code: 'E002',
     message: 'sai mật khẩu',
   },
+  {
+    code: 'E003',
+    message: 'không thể được đặt trong quá khứ.',
+  },
 ];
 
 export const FIELD_TRANSLATIONS = [
@@ -37,5 +41,16 @@ export const FIELD_TRANSLATIONS = [
   {
     fieldName: 'phone',
     translation: 'Số điện thoại',
+  },
+  {
+    fieldName: 'appointment_time',
+    translation: 'Lịch',
+  },
+];
+
+export const DENTAL_ISSUE = [
+  {
+    code: 'caries',
+    name: 'Sâu răng',
   },
 ];

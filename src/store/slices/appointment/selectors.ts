@@ -5,3 +5,6 @@ export const selectAppointmentList = (state: RootState) =>
 
 export const selectLoadingGetAppointmentList = (state: RootState) =>
   state.appointmentReducer.loadingGetAppointmentList;
+
+export const selectLoadingAppointmentBooking = (state: RootState) =>
+  state.appointmentReducer.loadingAppointmentBooking;

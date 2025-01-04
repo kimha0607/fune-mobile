@@ -22,3 +22,9 @@ export interface ProfileChangePayload {
   role_id: number;
   active: number;
 }
+
+export interface IBaseUserList {
+  current_page: number;
+  data: IBaseUserInfo[];
+  total: number;
+}

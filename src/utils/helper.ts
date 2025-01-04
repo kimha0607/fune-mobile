@@ -1,6 +1,7 @@
+import { IBaseUserInfo } from './../types/user';
 import { Alert, Linking, Platform } from 'react-native';
 import { IBaseError } from '../types/error';
-import { CODE400, FIELD_TRANSLATIONS } from './config';
+import { CODE400, DENTAL_ISSUE, FIELD_TRANSLATIONS } from './config';
 
 export const transformErrorList = (errors: any[]) => {
   const result: any[] = [];
@@ -112,4 +113,23 @@ export const convertDateTime = (input: string) => {
   const year = date.getFullYear();
 
   return `${hours}:${minutes} ${day}-${month}-${year}`;
+};
+
+export const convertToVietnamese = (code: string) => {
+  const issue = DENTAL_ISSUE.find(item => item.code === code);
+
+  if (issue) {
+    return issue.name;
+  } else {
+    return 'Chưa có bản dịch';
+  }
+};
+
+export const filterDoctors = (users: IBaseUserInfo[]) => {
+  return users
+    .filter(user => user.role_id === 2)
+    .map(user => ({
+      label: user.name,
+      value: String(user.id),
+    }));
 };

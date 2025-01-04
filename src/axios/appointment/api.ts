@@ -1,4 +1,7 @@
-import { IBaseAppointmentList } from '../../types/appointment';
+import {
+  IBaseAppointmentList,
+  PayloadAppointmentBooking,
+} from '../../types/appointment';
 import { IBodyResponse } from '../../types/axios';
 import axiosInstance from '../axios';
 
@@ -10,5 +13,12 @@ export async function fetchAppointment(
   const res = await axiosInstance.get(
     `${APPOINTMENT_API_ENDPOINT}?patient_name=${id}`,
   );
+  return res;
+}
+
+export async function appointmentBooking(
+  payload: PayloadAppointmentBooking,
+): Promise<IBodyResponse<IBaseAppointmentList>> {
+  const res = await axiosInstance.post(`${APPOINTMENT_API_ENDPOINT}`, payload);
   return res;
 }
