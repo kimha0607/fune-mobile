@@ -42,6 +42,8 @@ axiosInstance.interceptors.response.use(
         text1: 'Thông báo',
         text2: 'Sai mật khẩu.',
       });
+      await AsyncStorage.removeItem(STORAGE_KEY.ACCESS_TOKEN);
+      store.dispatch(removeAccessToken());
     }
     if (error.response && error.response.status === 422) {
       const errorList = getErrorMessages(error.response.data.errors);
@@ -49,12 +51,10 @@ axiosInstance.interceptors.response.use(
       errorList.forEach(error => {
         return Toast.show({
           type: 'error',
-          text1: 'Lỗi đăng nhập',
+          text1: 'Thông báo',
           text2: error.message,
         });
       });
-      await AsyncStorage.removeItem(STORAGE_KEY.ACCESS_TOKEN);
-      store.dispatch(removeAccessToken());
     }
     if (error.response && error.response.status === 500) {
       Toast.show({

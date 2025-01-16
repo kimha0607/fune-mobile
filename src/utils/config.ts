@@ -27,6 +27,14 @@ export const CODE400 = [
     code: 'E003',
     message: 'không thể được đặt trong quá khứ.',
   },
+  {
+    code: 'E005',
+    message: 'bác sĩ này đã có người đặt vào thời gian này.',
+  },
+  {
+    code: 'E999',
+    message: 'không được để trống.',
+  },
 ];
 
 export const FIELD_TRANSLATIONS = [
@@ -46,11 +54,47 @@ export const FIELD_TRANSLATIONS = [
     fieldName: 'appointment_time',
     translation: 'Lịch',
   },
+  {
+    fieldName: 'user',
+    translation: 'Người dùng',
+  },
+  {
+    fieldName: 'dental_issue',
+    translation: 'Dịch vụ',
+  },
+  {
+    fieldName: 'doctor_id',
+    translation: 'Bác sĩ',
+  },
 ];
 
 export const DENTAL_ISSUE = [
   {
     code: 'caries',
     name: 'Sâu răng',
+  },
+  {
+    code: 'wisdom_tooth',
+    name: 'Khám răng khôn',
+  },
+  {
+    code: 'tartar',
+    name: 'Lấy cao răng',
+  },
+  {
+    code: 'teeth_whitening',
+    name: 'Tẩy trắng răng',
+  },
+  {
+    code: 'orthodontics',
+    name: 'Niềng răng',
+  },
+  {
+    code: 'extraction',
+    name: 'Nhổ răng',
+  },
+  {
+    code: 'checkup',
+    name: 'Khám tổng quát',
   },
 ];

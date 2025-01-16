@@ -11,7 +11,7 @@ export async function fetchAppointment(
   id: number,
 ): Promise<IBodyResponse<IBaseAppointmentList>> {
   const res = await axiosInstance.get(
-    `${APPOINTMENT_API_ENDPOINT}?patient_name=${id}`,
+    `${APPOINTMENT_API_ENDPOINT}?patient_id=${id}`,
   );
   return res;
 }

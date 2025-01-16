@@ -37,12 +37,13 @@ export default function AppointmentScheduleScreen() {
     if (userInfo) {
       dispatch(getAppointmentList(userInfo?.id));
     }
-  }, [userInfo, dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userInfo]);
 
   return (
     <ContainerComponent>
       <SpaceComponent height={20} />
-      {appointmentList.length === 0 && (
+      {Array.isArray(appointmentList) && appointmentList.length === 0 && (
         <Text style={styles.noData}>Không có lịch khám</Text>
       )}
       <FlatList

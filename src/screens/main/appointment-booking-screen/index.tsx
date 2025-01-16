@@ -26,7 +26,36 @@ import { resetLoadingAppointmentBooking } from '../../../store/slices/appointmen
 import { fetchDoctorInfo } from '../../../axios/user/api';
 import { filterDoctors } from '../../../utils/helper';
 
-const dataDentalIssue = [{ label: 'Sâu răng', value: 'caries' }];
+const dataDentalIssue = [
+  {
+    value: 'caries',
+    label: 'Sâu răng',
+  },
+  {
+    value: 'wisdom_tooth',
+    label: 'Khám răng khôn',
+  },
+  {
+    value: 'tartar',
+    label: 'Lấy cao răng',
+  },
+  {
+    value: 'teeth_whitening',
+    label: 'Tẩy trắng răng',
+  },
+  {
+    value: 'orthodontics',
+    label: 'Niềng răng',
+  },
+  {
+    value: 'extraction',
+    label: 'Nhổ răng',
+  },
+  {
+    value: 'checkup',
+    label: 'Khám tổng quát',
+  },
+];
 
 export default function AppointmentBookingScreen() {
   const { handleSubmit } = useForm();
